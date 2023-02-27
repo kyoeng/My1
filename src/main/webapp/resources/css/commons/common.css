@@ -1,0 +1,44 @@
+@import url(//fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    background-color: #1e1f21;
+}
+
+h1,
+h2,
+h3,
+table {
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 10px;
+}
+
+ul li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+input {
+    background-color: #292a2d;
+    border: 1px solid rgb(118, 118, 118);
+}

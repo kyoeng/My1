@@ -1,0 +1,155 @@
+.calendar_container {
+    width: 1000px;
+    height: 650px;
+    border: 1px solid rgb(118, 118, 118);
+    position: fixed;
+    left: calc((100% - 1000px) / 2);
+    transform: translateX(100px);
+    top: calc((100% - 650px) / 2);
+}
+
+
+
+/* ============== calendar nav ============== */
+
+.calendar_nav {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    font-size: 2.5rem;
+}
+
+.calendar_nav > a {
+    width: 70px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.calendar_nav > span {
+    width: 150px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+
+
+/* ============== calendar box ============== */
+
+.calendar_box {
+    width: 100%;
+    height: 580px;
+}
+
+.td_box {
+    border: 1px solid rgb(118, 118, 118);
+    position: relative;
+}
+
+.td_box > .td_link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+/* thead */
+.calendar_box > thead {
+    width: 100%;
+    height: 50px;
+    font-size: 2rem;
+    border-top: 1px solid rgb(118, 118, 118);
+}
+
+.calendar_box > thead > tr {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.calendar_box > thead > tr > td {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+
+/* tbody */
+.calendar_box > tbody {
+    width: 100%;
+    height: 530px;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar_box > tbody > tr {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 1.7rem;
+}
+
+.calendar_box > tbody > tr > td {
+    width: 100%;
+    height: 100%;
+}
+
+.date {
+    width: 100%;
+    height: 30%;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.schedule {
+    width: 100%;
+    height: 70%;
+    padding: 5px;
+}
+
+
+
+
+/* === common === */
+/* today */
+.today {
+    text-decoration: underline white;
+    font-weight: bold;
+}
+
+/* sun_day */
+.sun_day,
+.sun_day > div:first-of-type {
+    color: red;
+}
+
+
+/* sat_day */
+.sat_day,
+.sat_day > div:first-of-type {
+    color: dodgerblue;
+}
+
+
+/* hover */
+.td_box > .td_link:hover {
+    background-color: #cccccc;
+    opacity: 0.3;
+}
+
+.calendar_nav > a:hover {
+    background-color: #cccccc;
+}

@@ -1,0 +1,203 @@
+
+/* Login Container */
+
+.login_container {
+	width: 400px;
+	height: 460px;
+	position: fixed;
+	top: calc((100% - 460px) / 2);
+	left: calc((100% - 400px) / 2);
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	box-shadow: 1px 1px 3px rgb(118, 118, 118);
+}
+
+
+
+
+
+
+/* ================== LOGO =================== */
+
+.logo_box {
+	width: 100%;
+	margin: 0 auto;
+	height: 15%;
+	display: flex;
+	justify-content: center;
+}
+
+.logo_box > span {
+	display: block;
+	width: 160px;
+	font-size: 4rem;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+
+
+
+
+
+/* ================== Login Form ( .login_box ) =================== */
+
+.login_box {
+	width: 100%;
+	height: 40%;
+}
+
+.login_box > table {
+	display: block;
+	width: 90%;
+	height: 100%;
+	margin: auto;
+}
+
+
+
+.login_box > table > tbody {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+.login_box > table > tbody > tr:not(:last-of-type) {
+	width: 90%;
+	height: 28%;
+}
+
+.login_box > table > tbody > tr:last-of-type {
+	width: 90%;
+	height: 31%;
+	margin-top: 3%;
+}
+
+.login_box > table > tbody > tr:not(:last-of-type) {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+
+
+.login_box > table > tbody > tr:not(:last-of-type) > td {
+	display: flex;
+	align-content: center;
+	flex-wrap: wrap;
+	width: 90%;
+	height: 100%;
+}
+
+.login_box > table > tbody > tr:not(:last-of-type) > td > input {
+	width: 100%;
+	height: 90%;
+}
+
+
+
+.login_box > table > tbody > tr:last-of-type {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+.login_box > table > tbody > tr:last-of-type > th {
+	width: 90%;
+	height: 100%;
+}
+
+.login_box > table > tbody > tr:last-of-type > th > input {
+	width: 100%;
+	height: 100%;
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: white;
+	background-color: black;
+	cursor: pointer;
+}
+
+.login_box > table > tbody > tr:last-of-type > th > input:hover {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+
+
+/* ================== Link_box =================== */
+
+.link_box {
+	height: 20%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+
+
+.join_box,
+.find_box {
+	height: 40%;
+	display: flex;
+	justify-content: center;
+	gap: 3%;
+	align-content: center;
+	flex-wrap: wrap;
+	font-size: 1.3rem;
+}
+
+.join_box > span,
+.find_box > span {
+	width: 40%;
+	height: 70%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+.join_box > a,
+.find_box > a {
+	width: 15%;
+	height: 70%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+
+.join_box > a:hover,
+.find_box > a:hover {
+	text-decoration: underline;
+}
+
+
+
+
+
+
+
+.message {
+	width: 400px;
+	height: 30px;
+	position: absolute;
+	left: 0;
+	bottom: -30px;
+	font-size: 1.5rem;
+	line-height: 30px;
+	text-align: center;
+}
