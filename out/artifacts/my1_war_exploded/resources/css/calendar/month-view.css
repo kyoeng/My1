@@ -1,11 +1,9 @@
 .calendar_container {
-    width: 1000px;
-    height: 650px;
-    border: 1px solid rgb(118, 118, 118);
-    position: fixed;
-    left: calc((100% - 1000px) / 2);
-    transform: translateX(100px);
-    top: calc((100% - 650px) / 2);
+    width: 1200px;
+    height: 600px;
+    margin: calc(((100vh - 600px) / 2) + 35px) auto 0;
+    box-shadow: 0px 0px 20px rgb(118, 118, 118);
+    background-color: white;
 }
 
 
@@ -14,15 +12,15 @@
 
 .calendar_nav {
     width: 100%;
-    height: 70px;
+    height: 50px;
     display: flex;
     justify-content: center;
     gap: 50px;
-    font-size: 2.5rem;
+    font-size: 2.3rem;
 }
 
 .calendar_nav > a {
-    width: 70px;
+    width: 50px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -45,7 +43,7 @@
 
 .calendar_box {
     width: 100%;
-    height: 580px;
+    height: 550px;
 }
 
 .td_box {
@@ -66,9 +64,10 @@
 /* thead */
 .calendar_box > thead {
     width: 100%;
-    height: 50px;
-    font-size: 2rem;
-    border-top: 1px solid rgb(118, 118, 118);
+    height: 30px;
+    font-size: 1.8rem;
+    border: 1px solid rgb(118, 118, 118);
+    font-weight: bold;
 }
 
 .calendar_box > thead > tr {
@@ -90,7 +89,7 @@
 /* tbody */
 .calendar_box > tbody {
     width: 100%;
-    height: 530px;
+    height: 520px;
     display: flex;
     flex-direction: column;
 }
@@ -100,6 +99,7 @@
     height: 100%;
     display: flex;
     font-size: 1.7rem;
+    font-weight: bold;
 }
 
 .calendar_box > tbody > tr > td {
@@ -145,11 +145,8 @@
 
 
 /* hover */
-.td_box > .td_link:hover {
-    background-color: #cccccc;
-    opacity: 0.3;
-}
-
+.td_box > .td_link:hover,
 .calendar_nav > a:hover {
     background-color: #cccccc;
+    opacity: 0.5;
 }
