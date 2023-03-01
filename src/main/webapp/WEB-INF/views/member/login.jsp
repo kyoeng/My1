@@ -14,8 +14,16 @@
 			<h1 class="logo_box">
 				<span>My1</span>
 			</h1>
-		
+
+
+
 			<form action="login" method="post" class="login_box">
+				<div class="message">
+					<c:if test="${ requestScope.message != null }">
+								${ requestScope.message }
+					</c:if>
+				</div>
+
 				<table>
 					<tr>
 						<td colspan="2"><input type="text" name="id" placeholder="아이디를 입력하세요."></td>
@@ -42,13 +50,6 @@
 					<a href="find">찾아보기</a>
 				</div>
 			</div>
-
-
-			<c:if test="${ requestScope.message != null }">
-				<div class="message">
-					${ requestScope.message }
-				</div>
-			</c:if>
 		</div>
 	</body>
 </html>

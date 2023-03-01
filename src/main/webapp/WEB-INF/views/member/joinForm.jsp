@@ -83,7 +83,7 @@
 						<td>*</td>
 						<td>
 							<input type="password" id="password" name="password"
-								   placeholder="비밀번호 생성(숫자, 특수문자 1개씩 무조건 포함)" required>
+								   placeholder="비밀번호" required>
 						</td>
 					</tr>
 					

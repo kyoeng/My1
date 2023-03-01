@@ -5,7 +5,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: white;
+    color: black;
     font-family: 'Nanum Gothic', sans-serif;
 }
 
@@ -14,7 +14,7 @@ html {
 }
 
 body {
-    background-color: #1e1f21;
+    background-color: #ECECEC;
 }
 
 h1,
@@ -39,6 +39,5 @@ button {
 }
 
 input {
-    background-color: #292a2d;
     border: 1px solid rgb(118, 118, 118);
 }
