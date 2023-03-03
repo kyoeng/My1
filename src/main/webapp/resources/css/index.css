@@ -1,0 +1,67 @@
+.index_container {
+    width: 1000px;
+    height: 600px;
+    margin: calc(((100vh - 600px) / 2) + 35px) auto 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0px 0px 20px rgb(118, 118, 118);
+    background-color: white;
+}
+
+
+/* 오늘 날짜 css */
+.index_date {
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
+    font-size: 2.3rem;
+    border-bottom: 2px solid black;
+}
+
+
+/* 투두 리스트에 관한 css */
+.todo_container {
+    width: 100%;
+    height: 520px;
+    display: flex;
+}
+
+
+.todo_dis,
+.todo_eve {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.todo_dis {
+    border-right: 1px solid black;
+}
+
+.todo_eve {
+    border-left: 1px solid black;
+}
+
+
+.todo_title {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 1.6rem;
+    border-bottom: 2px solid black;
+}
+
+
+
+.todo_box {
+    width: 100%;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

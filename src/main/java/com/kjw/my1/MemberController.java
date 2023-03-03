@@ -1,14 +1,10 @@
 package com.kjw.my1;
 
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -16,17 +12,16 @@ import service.MemberService;
 import vo.MemberVO;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
 
+@Slf4j
 @Controller
 public class MemberController {
 
-    // service 객체 참조 변수
+    // 필드
     private final MemberService service;
-    // password 암호화를 위한 객체 참조 변수
     private final PasswordEncoder passwordEncoder;
 
 
@@ -38,19 +33,27 @@ public class MemberController {
     }
 
 
-    // 로그인 관련 Method -------------------------------------
+    /**
+     * 로그인 화면으로 향하기 위한 컨트롤러
+     * @param mv Model 객체
+     * @return login.jsp로 포워딩
+     */
     @GetMapping(value = "/login")
     public ModelAndView loginF(ModelAndView mv) {
-
         mv.setViewName("/member/login");
         return mv;
+    } // loginF
 
-    } // loginF()
 
-
+    /**
+     * 로그인을 위한 컨트롤러
+     * @param mv Model 객체
+     * @param vo Member VO
+     * @param request HttpServletRequest
+     * @return 성공 : 세션에 등록 | 실패 : 실패 메시지
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView login(ModelAndView mv, MemberVO vo, HttpServletRequest request) {
-
         String uri = "/member/login";
         String inputPw = vo.getPassword();
         vo = service.selectOne(vo);
@@ -73,42 +76,52 @@ public class MemberController {
 
         mv.setViewName(uri);
         return mv;
-
-    } // login()
-    // --------------------------------------------------
+    } // login
 
 
-    // 회원가입 관련 Method -----------------------------
 
-    // joinForm 으로 이동을 위한 method
+
+
+    /**
+     * 회원가입 화면으로 향하기 위한 컨트롤러
+     * @param mv ModelAndView 객체
+     * @return joinForm.jsp로 포워딩
+     */
     @RequestMapping(value = "/join", method = RequestMethod.GET)
     public ModelAndView joinF(ModelAndView mv) {
-
         mv.setViewName("/member/joinForm");
         return mv;
+    } // joinF
 
-    } // joinF()
-
-
-    // joinForm 에서 id check를 위한 method
+    /**
+     * 회원가입 시 아이디 중복 체크를 위한 컨트롤러
+     * @param mv ModelAndView 객체
+     * @param id 입력받은 ID
+     * @return 중복 없은 경우 : code에 200 | 중복이 있는 경우 : code에 202
+     */
     @GetMapping("/idcheck")
     public ModelAndView idCheck(ModelAndView mv, @RequestParam("id") String id) {
         if(service.idCheck(id) < 1) {
             mv.addObject("code", "200");
         } else {
-            mv.addObject("code", "201");
+            mv.addObject("code", "202");
         }
 
         mv.setViewName("jsonView");
         return mv;
     }
 
-
-    // 최종 회원가입을 위한 method
+    /**
+     * 회원가입을 위한 컨트롤러
+     * @param mv ModelAndView
+     * @param vo Member VO
+     * @param request HttpServletRequest
+     * @param rttr RedirectAttributes
+     * @return 성공 : 성공메시지, 로그인 화면으로 | 실패 : 실패메시지, 회원가입 초기 화면으로
+     * @throws IOException
+     */
     @RequestMapping(value = "/join", method = RequestMethod.POST)
-    public ModelAndView join(ModelAndView mv, MemberVO vo,
-                             HttpServletRequest request, RedirectAttributes rttr) throws IOException {
-
+    public ModelAndView join(ModelAndView mv, MemberVO vo,HttpServletRequest request, RedirectAttributes rttr) throws IOException {
         // => 개발환경 (배포전) => C:\DevJ\workspace\my1\out\artifacts\my1_war_exploded
         // => 톰캣서버에 배포 후 : 서버내에서의 위치가 됨 => C:\DevJ\IDE\apache-tomcat-9.0.70-windows-x64\apache-tomcat-9.0.70\webapps\프로젝트명\
         String uploadPath = request.getSession().getServletContext().getRealPath("/");
@@ -140,8 +153,7 @@ public class MemberController {
 
         String uri = "redirect:login";
 
-        // insert method의 return값이 성공 시 -2147482646으로 나옴
-        if(service.insert(vo) < 0) {
+        if(service.join(vo) > 0) {
             rttr.addFlashAttribute("message", "회원가입이 완료되었습니다. 로그인 후 이용하세요.");
         } else {
             uri = "redirect:join";
@@ -150,9 +162,98 @@ public class MemberController {
 
         mv.setViewName(uri);
         return mv;
+    } // join
 
-    } // join()
-    // --------------------------------------------------
+
+
+    /**
+     * 로그아웃을 위한 컨트롤러
+     * @param mv ModelAndView
+     * @param request HttpServletRequest
+     * @return login컨르롤러로 리다이렉트
+     */
+    @GetMapping("/logout")
+    public ModelAndView logout(ModelAndView mv, HttpServletRequest request) {
+        request.getSession().invalidate();
+        String uri = "redirect:login";
+        mv.setViewName(uri);
+        return mv;
+    }
+
+
+
+    /**
+     * 내정보 보기로 향하기 위한 컨트롤러
+     * @param mv ModelAndView
+     * @param vo Member VO
+     * @param request HttpServletRequest
+     * @return myInfo.jsp로 포워딩
+     */
+    @GetMapping("/my-info")
+    public ModelAndView myInfo(ModelAndView mv, MemberVO vo, HttpServletRequest request) {
+        vo.setId((String)request.getSession().getAttribute("loginID"));
+        mv.addObject("myInfo", service.selectOne(vo));
+        mv.setViewName("/member/myInfo");
+        return mv;
+    }
+
+
+    /**
+     * 회원 정보 수정을 위한 컨트롤러
+     * @param mv  ModelAndView
+     * @param vo Member VO
+     * @param request HttpServletRequest
+     * @param rttr RedirectAttributes
+     * @return
+     */
+    @PostMapping("/update/my-info")
+    public ModelAndView updateMyInfo(ModelAndView mv, MemberVO vo, HttpServletRequest request, RedirectAttributes rttr) throws IOException {
+        MultipartFile uploadF = vo.getUpload_imageF();
+
+        // 수정할 이미지를 올린 경우
+        if (uploadF != null && !uploadF.isEmpty()) {
+            // => 개발환경 (배포전) => C:\DevJ\workspace\my1\out\artifacts\my1_war_exploded
+            // => 톰캣서버에 배포 후 : 서버내에서의 위치가 됨 => C:\DevJ\IDE\apache-tomcat-9.0.70-windows-x64\apache-tomcat-9.0.70\webapps\프로젝트명\
+            String uploadPath = request.getSession().getServletContext().getRealPath("/");
+
+            if(uploadPath.contains("workspace")) {
+                uploadPath = "C:\\DevJ\\workspace\\my1\\out\\artifacts\\my1_war_exploded\\resources\\uploadImgs";
+            } else {
+                uploadPath += "resources\\uploadImgs";
+            }
+
+            String fileName1 = uploadPath + "/" + uploadF.getOriginalFilename();			// 실제 저장할 절대 경로 지정
+            String fileName2 = "resources/uploadImgs/" + uploadF.getOriginalFilename();		// DB에 저장할 경로 만들기
+
+            uploadF.transferTo(new File(fileName1));
+
+            vo.setUpload_image(fileName2);
+
+
+        // 수정할 이미지를 올리지 않은 경우
+        } else {
+            MemberVO vo2 = new MemberVO();
+            vo2.setId(vo.getId());
+            vo2 = service.selectOne(vo2);
+
+            vo.setUpload_image(vo2.getUpload_image());
+        }
+
+        vo.setPassword(passwordEncoder.encode(vo.getPassword()));
+
+        String uri = "redirect:/";
+
+        if(service.update(vo) > 0) {
+            rttr.addFlashAttribute("message", "수정이 완료되었습니다.");
+            request.getSession().setAttribute("myImg", service.selectOne(vo).getUpload_image());
+        } else {
+            uri = "redirect:my-info";
+            rttr.addFlashAttribute("message", "수정에 실패하였습니다.");
+        }
+
+        mv.setViewName(uri);
+        return mv;
+    }
 
 }
 

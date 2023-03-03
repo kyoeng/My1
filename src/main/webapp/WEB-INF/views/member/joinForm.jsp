@@ -63,7 +63,7 @@
 				<a href="/">My1</a>
 			</h1>
 		
-			<form class="join_form" method="post" enctype="multipart/form-data">
+			<form class="join_form" action="/join" method="post" enctype="multipart/form-data">
 				<div id="message">
 					<c:if test="${ requestScope.message != null }">
 						${ requestScope.message }
@@ -112,7 +112,7 @@
 						<td>내 사진<br>( 선택 )</td>
 						<td>
 							<label for="file_btn">upload</label>
-							<input type="file" name="myimageF" id="file_btn" onchange="imageView(this)">
+							<input type="file" name="upload_imageF" id="file_btn" onchange="imageView(this)">
 						</td>
 						
 						<td>

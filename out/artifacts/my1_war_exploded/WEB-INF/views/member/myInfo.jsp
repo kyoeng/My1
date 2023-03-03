@@ -8,11 +8,9 @@
 		<link rel="stylesheet" type="text/css" href="resources/css/commons/common.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/member/joinForm.css">
 		<script src="resources/js/jquery-3.2.1.min.js"></script>
-		<script src="resources/js/ajax.js"></script>
 		<script src="resources/js/join.js"></script>
 		<script>
-			let iCheck = false, pCheck = false, p2Check = false,
-				nCheck = false, phoneCheck = false;
+			let pCheck = false, p2Check = false;
 
 			onload = function() {
 				document.getElementById('password').addEventListener('focusout', () => {
@@ -22,22 +20,14 @@
 				document.getElementById('password2').addEventListener('focusout', () => {
 					p2Check = checkPw();
 				});
-
-				document.getElementById('name').addEventListener('focusout', () => {
-					nCheck = checkName();
-				});
-
-				document.getElementById('phone').addEventListener('focusout', () => {
-					phoneCheck = checkPhone();
-				})
 			}
 
 
-			function joinCheck() {
-				if(iCheck && pCheck && p2Check && nCheck && phoneCheck) {
+			function updateCheck() {
+				if(pCheck && p2Check) {
 					return true;
 				} else {
-					alert('필수 입력사항 확인 후 재시도 바랍니다.');
+					alert('수정할 비밀번호를 완성해주세요.');
 					return false;
 				}
 			}
@@ -63,7 +53,7 @@
 				<a href="/">My1</a>
 			</h1>
 		
-			<form class="join_form" action="/join" method="post" enctype="multipart/form-data">
+			<form class="join_form" action="/update/my-info" method="post" enctype="multipart/form-data">
 				<div id="message">
 					<c:if test="${ requestScope.message != null }">
 						${ requestScope.message }
@@ -72,10 +62,9 @@
 
 				<table>
 					<tr>
-						<td>*</td>
+						<td>ID</td>
 						<td id="id_input">
-							<input type="text" id="id" name="id" placeholder="아이디를 입력하세요." required>
-							<input type="button" id="check_btn" value="중복 확인" onclick="idCheck()">
+							<input type="text" id="id" name="id" value="${ requestScope.myInfo.id }" readonly>
 						</td>
 					</tr>
 					
@@ -83,28 +72,28 @@
 						<td>*</td>
 						<td>
 							<input type="password" id="password" name="password"
-								   placeholder="비밀번호" required>
+								   placeholder="수정할 비밀번호" required>
 						</td>
 					</tr>
 					
 					<tr>
 						<td>*</td>
 						<td>
-							<input type="password" id="password2" placeholder="비밀번호 확인" required>
+							<input type="password" id="password2" placeholder="수정할 비밀번호 확인" required>
 						</td>
 					</tr>
 					
 					<tr>
-						<td>*</td>
+						<td>Name</td>
 						<td>
-							<input type="text" name="name" id="name" placeholder="성함" required>
+							<input type="text" name="name" id="name" value="${requestScope.myInfo.name}" readonly>
 						</td>
 					</tr>
 					
 					<tr>
-						<td>*</td>
+						<td>Phone</td>
 						<td>
-							<input type="text" name="phone" id="phone" placeholder="Phone Number('-' 없이)" required>
+							<input type="text" name="phone" id="phone" value="${requestScope.myInfo.phone}" readonly>
 						</td>
 					</tr>
 					
@@ -122,7 +111,7 @@
 					
 					<tr>
 						<td colspan="2">
-							<input type="submit" value="가 입 하 기" onclick="return joinCheck()">
+							<input type="submit" value="수 정 하 기" onclick="return updateCheck()">
 						</td>
 					</tr>
 				</table>
