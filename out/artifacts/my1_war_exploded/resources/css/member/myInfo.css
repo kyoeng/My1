@@ -1,0 +1,234 @@
+
+/* Login Container */
+
+.join_container {
+	width: 400px;
+	height: 600px;
+	position: fixed;
+	top: calc((100% - 600px) / 2);
+	left: calc((100% - 400px) / 2);
+	box-shadow: 0px 0px 10px rgb(118, 118, 118);
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	background-color: white;
+}
+
+
+
+
+
+
+/* ================== LOGO =================== */
+
+.logo_box {
+	width: 160px;
+	height: 11.5%;
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+
+.logo_box > a {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+	width: 100%;
+	height: 100%;
+	font-size: 4rem;
+}
+
+
+
+
+/* ================== join Form =================== */
+
+.join_form {
+	width: 90%;
+	height: 70%;
+	margin: 0 auto;
+	position: relative;
+}
+
+#message {
+	width: 300px;
+	line-height: 20px;
+	text-align: center;
+	position: absolute;
+	top: -25px;
+	left: calc((100% - 300px) / 2);
+	font-size: 1.5rem;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.join_form > table {
+	display: block;
+	width: 90%;
+	height: 100%;
+	margin: auto;
+}
+
+.join_form > table > tbody {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+}
+
+
+
+.join_form > table > tbody > tr:not(:nth-child(6)):not(:last-of-type) {
+	width: 100%;
+	height: 9%;
+	display: flex;
+	justify-content: center;
+}
+
+.join_form > table > tbody > tr:not(:nth-child(6)):not(:last-of-type) > td:first-of-type {
+	width: 10%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+	font-size: 1.4rem;
+}
+
+.join_form > table > tbody > tr:not(:nth-child(6)):not(:last-of-type) > td:not(:first-of-type) {
+	width: 80%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+.join_form > table > tbody > tr:not(:nth-child(6)):not(:last-of-type) > td > input {
+	width: 90%;
+	height: 90%;
+	padding-left: 10px;
+}
+
+
+
+.join_form > table > tbody > tr:nth-child(6) {
+	width: 100%;
+	height: 25%;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.join_form > table > tbody > tr:nth-child(6) > td:first-of-type {
+	width: 15%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+	font-size: 1.4rem;
+}
+
+.join_form > table > tbody > tr:nth-child(6) > td:not(:first-of-type) {
+	width: 35%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+.join_form > table > tbody > tr:nth-child(6) > td:nth-child(2) > label {
+	width: 70%;
+	height: 40%;
+	font-size: 1.5rem;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-wrap: wrap;
+	background-color: black;
+	cursor: pointer;
+	border: 1px solid rgb(118, 118, 118);
+	color: white;
+}
+
+.join_form > table > tbody > tr:nth-child(6) > td:nth-child(2) > #file_btn {
+	display: none;
+}
+	
+.join_form > table > tbody > tr:nth-child(6) > td:last-of-type > img {
+	width: 100px;
+	height: 100px;
+}
+	
+	
+	
+
+
+.join_form > table > tbody > tr:last-of-type {
+	width: 100%;
+	height: 13%;
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+.join_form > table > tbody > tr:last-of-type > td {
+	width: 45%;
+	height: 100%;
+}
+
+.join_form > table > tbody > tr:last-of-type > td > input,
+.join_form > table > tbody > tr:last-of-type > td > div {
+	width: 100%;
+	height: 100%;
+	font-size: 1.5rem;
+	font-weight: bold;
+	background-color: black;
+	cursor: pointer;
+	color: white;
+}
+
+
+
+
+
+/* id input box */
+#id_input {
+	position: relative;
+}
+
+#check_btn {
+	position: absolute;
+	background-color: black;
+	font-size: 1.2rem;
+	width: 60px;
+	height: 28px;
+	top: calc((100% - 28px) / 2);
+	right: 17px;
+	z-index: 10;
+	cursor: pointer;
+	color: white;
+	padding-left: 0px;
+}
+
+
+
+
+
+
+.join_form > table > tbody > tr:last-of-type > td > input:hover,
+.join_form > table > tbody > tr:last-of-type > td > div:hover,
+#check_btn:hover,
+.join_form > table > tbody > tr:nth-child(6) > td:nth-child(2) > label:hover {
+	opacity: 0.5;
+}
+

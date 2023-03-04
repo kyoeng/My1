@@ -21,4 +21,8 @@
         password = #{password}, name = #{name}, phone = #{phone}, upload_image = #{upload_image}
         where id = #{id}
     </update>
+
+    <delete id="delete">
+        delete from member where id = #{id}
+    </delete>
 </mapper>

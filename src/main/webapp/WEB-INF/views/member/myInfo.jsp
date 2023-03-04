@@ -6,7 +6,7 @@
 		<meta charset="UTF-8">
 		<title>Spring M1</title>
 		<link rel="stylesheet" type="text/css" href="resources/css/commons/common.css">
-		<link rel="stylesheet" type="text/css" href="resources/css/member/joinForm.css">
+		<link rel="stylesheet" type="text/css" href="resources/css/member/myInfo.css">
 		<script src="resources/js/jquery-3.2.1.min.js"></script>
 		<script src="resources/js/join.js"></script>
 		<script>
@@ -29,6 +29,29 @@
 				} else {
 					alert('수정할 비밀번호를 완성해주세요.');
 					return false;
+				}
+			}
+
+			function deleteBtn() {
+				if (confirm("정말 탈퇴하시겠습니까?")) {
+					$.ajax({
+						type: "post",
+						url: "del-member",
+						data : {
+							id: $('#id').val()
+						},
+						success : (res) => {
+							if (res.status === 200) {
+								alert(res.data);
+								location.replace("login");
+							} else {
+								alert(res.data);
+							}
+						},
+						error : () => {
+							alert("탈퇴에 실패했습니다.");
+						}
+					})
 				}
 			}
 
@@ -72,14 +95,14 @@
 						<td>*</td>
 						<td>
 							<input type="password" id="password" name="password"
-								   placeholder="수정할 비밀번호" required>
+								   placeholder="수정할 비밀번호">
 						</td>
 					</tr>
 					
 					<tr>
 						<td>*</td>
 						<td>
-							<input type="password" id="password2" placeholder="수정할 비밀번호 확인" required>
+							<input type="password" id="password2" placeholder="수정할 비밀번호 확인">
 						</td>
 					</tr>
 					
@@ -110,8 +133,12 @@
 					</tr>
 					
 					<tr>
-						<td colspan="2">
+						<td>
 							<input type="submit" value="수 정 하 기" onclick="return updateCheck()">
+						</td>
+
+						<td>
+							<div onclick="deleteBtn()">회원탈퇴</div>
 						</td>
 					</tr>
 				</table>

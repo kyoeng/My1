@@ -1,7 +1,6 @@
 package service;
 
 import mappers.MemberMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vo.MemberVO;
 
@@ -52,5 +51,15 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public int update(MemberVO vo) {
         return mapper.update(vo);
+    }
+
+    /**
+     * 회원탈퇴를 위한 메서드
+     * @param vo 회원 VO
+     * @return 성공 : 1 | 실패 : 0
+     */
+    @Override
+    public int delete(MemberVO vo) {
+        return mapper.delete(vo);
     }
 }
