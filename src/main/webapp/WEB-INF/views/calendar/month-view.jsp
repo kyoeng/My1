@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="resources/css/commons/common.css">
         <link rel="stylesheet" type="text/css" href="resources/css/commons/header.css">
         <link rel="stylesheet" type="text/css" href="resources/css/calendar/month-view.css">
+        <script src="resources/js/jquery-3.2.1.min.js"></script>
         <script defer src="resources/js/header.js"></script>
     </head>
 
@@ -55,9 +56,9 @@
                 <a href="month-view?year=${ todayInfo.beforeYear }&month=${ todayInfo.beforeMonth }">&lt;</a>
 
                 <%-- 현재년월 --%>
-                <span>
-                    ${ todayInfo.searchYear } .
-
+                <span id="yyyymm">
+                    ${ todayInfo.searchYear }
+                    -
                     <c:if test="${ todayInfo.searchMonth < 9 }">0</c:if>${ todayInfo.searchMonth + 1 }
                 </span>
 
@@ -96,7 +97,7 @@
                                         </div>
 
                                         <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                            <a href="" class="td_link"></a>
+                                            <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
                                         </c:if>
                                     </td>
                             </c:when>
@@ -115,7 +116,7 @@
                                         </div>
 
                                         <c:if test="${ dateList.date != null && dateList.date != ''}">
-                                            <a href="" class="td_link"></a>
+                                            <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
                                         </c:if>
                                     </td>
                             </c:when>
@@ -132,7 +133,7 @@
                                     </div>
 
                                     <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                        <a href="" class="td_link"></a>
+                                        <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
                                     </c:if>
                                 </td>
                             </c:when>
@@ -149,7 +150,7 @@
                                     </div>
 
                                     <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                        <a href="" class="td_link"></a>
+                                        <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
                                     </c:if>
                                 </td>
                             </c:when>
@@ -168,7 +169,7 @@
                                         </div>
 
                                         <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                            <a href="" class="td_link"></a>
+                                            <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
                                         </c:if>
                                     </td>
                             </c:when>
@@ -185,7 +186,7 @@
                                     </div>
 
                                     <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                        <a href="" class="td_link"></a>
+                                        <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
                                     </c:if>
                                 </td>
                             </c:otherwise>
@@ -194,5 +195,48 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="popup_container">
+            <div class="popup_box">
+                <h3 class="popup_date"></h3>
+
+                <div style="width: 400px; height: 120px; margin: 0 auto;">
+                    <p style="font-size: 1.4rem; height: 20px; line-height: 20px">일정 내용</p>
+                    <textarea id="content_box" maxlength="50"></textarea>
+                </div>
+
+                <label>
+                    <input type="checkbox" value="eve" id="eve_check">
+                    해당 날짜 반복
+                </label>
+
+                <button class="add_btn">일정 추가</button>
+
+                <button onclick="offPopUp()" class="close_btn">X</button>
+            </div>
+        </div>
+
+        <script>
+            const yyyy = ${todayInfo.searchYear};
+
+            let mmTemp = ${todayInfo.searchMonth + 1};
+            if (mmTemp < 9) mmTemp = '0' + mmTemp;
+
+            const mm = mmTemp;
+
+            function onPopUp(d) {
+                if (d < 10) d = '0' + d;
+                let date = yyyy + '-' + mm + '-' + d;
+
+                $('.popup_date').text(date);
+                $('.popup_container').show();
+            }
+
+            function offPopUp() {
+                $('#content_box').val('');
+                $('#eve_check').prop('checked', false);
+                $('.popup_container').hide();
+            }
+        </script>
     </body>
 </html>

@@ -34,6 +34,8 @@
 
 			function deleteBtn() {
 				if (confirm("정말 탈퇴하시겠습니까?")) {
+					console.log($('#id').val());
+
 					$.ajax({
 						type: "post",
 						url: "del-member",
@@ -41,11 +43,11 @@
 							id: $('#id').val()
 						},
 						success : (res) => {
-							if (res.status === 200) {
-								alert(res.data);
+							if (res.code === 200) {
+								alert("탈퇴에 성공하였습니다.");
 								location.replace("login");
 							} else {
-								alert(res.data);
+								alert("탈퇴에 실패했습니다.");
 							}
 						},
 						error : () => {
@@ -133,16 +135,14 @@
 					</tr>
 					
 					<tr>
-						<td>
+						<td colspan="2">
 							<input type="submit" value="수 정 하 기" onclick="return updateCheck()">
-						</td>
-
-						<td>
-							<div onclick="deleteBtn()">회원탈퇴</div>
 						</td>
 					</tr>
 				</table>
 			</form>
 		</div>
+
+		<button class="delete_btn" onclick="deleteBtn()">회원탈퇴</button>
 	</body>
 </html>

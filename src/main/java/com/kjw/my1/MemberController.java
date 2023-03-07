@@ -262,15 +262,16 @@ public class MemberController {
 
 
     @PostMapping("del-member")
-    @ResponseBody
-    public String deleteMember(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView deleteMember(MemberVO vo, HttpServletRequest request, HttpServletResponse response, ModelAndView mv) {
         if (service.delete(vo) > 0) {
             request.getSession().invalidate();
-            return "탈퇴가 완료되었습니다.";
+            mv.addObject("code", 200);
         } else {
-            response.setStatus(HttpStatus.ACCEPTED.value());
-            return "탈퇴에 실패했습니다.";
+            mv.addObject("code", 202);
         }
+
+        mv.setViewName("jsonView");
+        return mv;
     }
 }
 
