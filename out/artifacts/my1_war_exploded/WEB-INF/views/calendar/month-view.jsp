@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -7,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="resources/css/commons/common.css">
         <link rel="stylesheet" type="text/css" href="resources/css/commons/header.css">
         <link rel="stylesheet" type="text/css" href="resources/css/calendar/month-view.css">
+        <script src="resources/js/jquery-3.2.1.min.js"></script>
         <script defer src="resources/js/header.js"></script>
     </head>
 
@@ -55,9 +57,9 @@
                 <a href="month-view?year=${ todayInfo.beforeYear }&month=${ todayInfo.beforeMonth }">&lt;</a>
 
                 <%-- 현재년월 --%>
-                <span>
-                    ${ todayInfo.searchYear } .
-
+                <span id="yyyymm">
+                    ${ todayInfo.searchYear }
+                    -
                     <c:if test="${ todayInfo.searchMonth < 9 }">0</c:if>${ todayInfo.searchMonth + 1 }
                 </span>
 
@@ -82,6 +84,8 @@
 
                 <tbody>
                     <c:forEach var="dateList" items="${ requestScope.dateList }" varStatus="date_status">
+                        <c:set var="day" value="${(dateList.date < 10 && dateList.date != null ? '0' : '')}${dateList.date}" />
+
                         <c:choose>
                             <%-- 캘린더 첫번째는 무조건 일요일부터 시작 --%>
                             <c:when test="${ date_status.index == 0 }">
@@ -92,11 +96,26 @@
                                         </div>
 
                                         <div class="schedule">
+                                            <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
                                         </div>
 
                                         <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                            <a href="" class="td_link"></a>
+                                            <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                               class="td_btn"></a>
                                         </c:if>
                                     </td>
                             </c:when>
@@ -105,17 +124,32 @@
                             <c:when test="${ date_status.index % 7 == 0 && dateList.value == 'today'}">
                                 </tr>
                                 <tr>
-                                    <td class="sun_day td_box today">
-                                        <div class="date sun">
-                                            ${ dateList.date }
+                                    <td class="td_box today">
+                                        <div class="date today">
+                                            today
                                         </div>
 
                                         <div class="schedule">
+                                            <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
                                         </div>
 
                                         <c:if test="${ dateList.date != null && dateList.date != ''}">
-                                            <a href="" class="td_link"></a>
+                                            <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                               class="td_btn"></a>
                                         </c:if>
                                     </td>
                             </c:when>
@@ -124,15 +158,30 @@
                             <c:when test="${ dateList.value == 'today' }">
                                 <td class="today td_box">
                                     <div class="date today">
-                                        ${ dateList.date }
+                                        today
                                     </div>
 
                                     <div class="schedule">
+                                        <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
                                     </div>
 
                                     <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                        <a href="" class="td_link"></a>
+                                        <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                           class="td_btn"></a>
                                     </c:if>
                                 </td>
                             </c:when>
@@ -145,17 +194,32 @@
                                     </div>
 
                                     <div class="schedule">
+                                        <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
                                     </div>
 
                                     <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                        <a href="" class="td_link"></a>
+                                        <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                           class="td_btn"></a>
                                     </c:if>
                                 </td>
                             </c:when>
 
                             <%-- 일요일인 경우 --%>
-                            <c:when test="${ date_status.index % 7 == 0}">
+                            <c:when test="${ date_status.index % 7 == 0 }">
                                 </tr>
                                 <tr>
                                     <td class="sun_day td_box">
@@ -164,11 +228,26 @@
                                         </div>
 
                                         <div class="schedule">
+                                            <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
                                         </div>
 
                                         <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                            <a href="" class="td_link"></a>
+                                            <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                                class="td_btn"></a>
                                         </c:if>
                                     </td>
                             </c:when>
@@ -181,11 +260,26 @@
                                     </div>
 
                                     <div class="schedule">
+                                        <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
                                     </div>
 
                                     <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                        <a href="" class="td_link"></a>
+                                        <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                           class="td_btn"></a>
                                     </c:if>
                                 </td>
                             </c:otherwise>

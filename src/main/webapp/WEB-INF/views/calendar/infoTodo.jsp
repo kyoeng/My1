@@ -7,7 +7,7 @@
     <title>Spring M1</title>
     <link rel="stylesheet" type="text/css" href="resources/css/commons/common.css">
     <link rel="stylesheet" type="text/css" href="resources/css/commons/header.css">
-    <link rel="stylesheet" type="text/css" href="resources/css/index.css">
+    <link rel="stylesheet" type="text/css" href="resources/css/calendar/infoTodo.css">
     <script src="resources/js/jquery-3.2.1.min.js"></script>
     <script defer src="resources/js/header.js"></script>
   </head>
@@ -18,11 +18,11 @@
         <h1 class="title">My1</h1>
 
         <div class="header_nav">
-          <a href="/" class="hd_nav home_btn selected">
+          <a href="/" class="hd_nav home_btn">
             오늘의 일정
           </a>
 
-          <a href="month-view" class="hd_nav monthView_btn">
+          <a href="month-view" class="hd_nav monthView_btn selected">
             캘린더
           </a>
 
@@ -51,7 +51,7 @@
 
     <div class="index_container">
       <h2 class="index_date">
-        ${requestScope.today}
+        ${requestScope.date}
       </h2>
 
       <div class="todo_container">
@@ -61,8 +61,8 @@
           </h3>
 
           <div class="todo_box">
-            <c:forEach var="dis" items="${requestScope.dispo}">
-              <span class="todo_content">${dis.todo_content}</span>
+            <c:forEach var="dispo" items="${requestScope.dispo}">
+              <span class="todo_content">${dispo.todo_content}</span>
             </c:forEach>
           </div>
         </div>
@@ -91,10 +91,10 @@
     <div class="popup_container" id="input_pop">
       <form class="popup_box" action="/reg_todo" method="post">
         <h3 class="popup_date">
-          ${requestScope.today}
+          ${requestScope.date}
         </h3>
 
-        <input type="hidden" name="todo_date" value="${requestScope.today}" >
+        <input type="hidden" name="todo_date" value="${requestScope.date}" >
 
         <div style="width: 400px; height: 120px; margin: 0 auto;">
           <p style="font-size: 1.4rem; height: 20px; line-height: 20px">일정 내용</p>

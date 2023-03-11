@@ -2,43 +2,60 @@ package com.kjw.my1;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import service.CalendarService;
 import vo.DateVO;
+import vo.ScheduleVO;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Slf4j
 @Controller
 public class CalendarController {
 
-    @RequestMapping(value = "/month-view")
-    public ModelAndView monthView(ModelAndView mv, DateVO vo) {
+    // í•„ë“œ
+    private final CalendarService service;
 
-        // ÇöÀç ³¯Â¥ ½Ã°£ µ¥ÀÌÅÍ »ı¼º
+    // ìƒì„±ì
+    public CalendarController(CalendarService service) {
+        this.service = service;
+    }
+
+
+    /**
+     * ìº˜ë¦°ë” í˜ì´ì§€ë¥¼ ìœ„í•œ ì»¨íŠ¸ë¡¤ëŸ¬
+     * @param mv ModelAndView
+     * @param vo DateVO
+     * @param scheVo ScheduleVO
+     * @return ìº˜ë¦°ë” í˜ì´ì§€
+     */
+    @RequestMapping(value = "/month-view")
+    public ModelAndView monthView(ModelAndView mv, DateVO vo, ScheduleVO scheVo, HttpServletRequest request) {
+
         Calendar calendar = Calendar.getInstance();
-        // Ä¶¸°´õÀÇ ºóÄ­À» À§ÇÑ DateVO Type
         DateVO calendarDate;
 
-        // vo¿¡ Àü´ŞµÈ µ¥ÀÌÅÍ°¡ ¾ø´Â °æ¿ì ÇöÀçÀÇ ³¯Â¥¿Í ½Ã°£À¸·Î Àç»ı¼º
         if(vo.getDate().equals("") && vo.getMonth().equals("")) {
             vo = new DateVO(String.valueOf(calendar.get(Calendar.YEAR)),
                     String.valueOf(calendar.get(Calendar.MONTH)),
                     String.valueOf(calendar.get(Calendar.DATE)), null);
         }
 
-        // ³â, ¿ù, ¿äÀÏ µîÀÇ µ¥ÀÌÅÍ¸¦ À§ÇÑ Map º¯¼ö
         Map<String, Integer> todayInfo = vo.todayInfo(vo);
-        // return À» À§ÇÑ DateVO Å¸ÀÔÀÇ List
         List<DateVO> dateList = new ArrayList<>();
 
-        // 1ÀÏ¿¡ ÇØ´çÇÏ´Â ¿äÀÏ Àü±îÁö ºó µ¥ÀÌÅÍ »ı¼º ÈÄ List ¿¡ add
         for(int i = 1; i < todayInfo.get("start"); i++) {
             calendarDate = new DateVO(null, null, null, null);
             dateList.add(calendarDate);
         }
 
-        // 1ÀÏºÎÅÍ ¸»ÀÏ±îÁö µ¥ÀÌÅÍ »ğÀÔ
         for(int i = todayInfo.get("startDate"); i <= todayInfo.get("endDate"); i++) {
             if(i == todayInfo.get("today")) {
                 calendarDate = new DateVO(String.valueOf(vo.getYear()),
@@ -53,10 +70,8 @@ public class CalendarController {
             dateList.add(calendarDate);
         }
 
-        // ¸»ÀÏ ÈÄÀÇ ºó µ¥ÀÌÅÍ »ğÀÔÀ» À§ÇÑ °è»ê
         int index = 7 - dateList.size() % 7;
 
-        // ¸»ÀÏ ÈÄÀÇ Ä¶¸°´õ¸¦ À§ÇÑ ºó µ¥ÀÌÅÍ »ğÀÔ
         if((dateList.size() % 7) != 0) {
             for(int i = 0; i < index; i++) {
                 calendarDate = new DateVO(null, null, null, null);
@@ -67,7 +82,85 @@ public class CalendarController {
         mv.addObject("dateList", dateList);
         mv.addObject("todayInfo", todayInfo);
 
+        if (vo.getYear() != null && !vo.getYear().equals("")) {
+            String yyyy = vo.getYear();
+            int mm = Integer.parseInt(vo.getMonth());
+            String calcM = mm < 9 ? "0" + (mm + 1) : "" + (mm + 1) ;
+            scheVo.setTodo_date(yyyy + "-" + calcM);
+        } else {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+            Date date = new Date();
+            scheVo.setTodo_date(simpleDateFormat.format(date));
+        }
+        scheVo.setId((String)request.getSession().getAttribute("loginID"));
+        mv.addObject("dispo", service.getMonthDataD(scheVo));
+        mv.addObject("every", service.getMonthDataE(scheVo));
+
         mv.setViewName("calendar/month-view");
+        return mv;
+    }
+
+
+    /**
+     * ì¼ì • ìƒì„¸ í˜ì´ì§€ë¥¼ ìœ„í•œ ì»¨íŠ¸ë¡¤ëŸ¬
+     * @param vo ScheduleVO
+     * @param mv ModelAndView
+     * @param request HttpServletRequest
+     * @return ì¼ì • ìƒì„¸ í˜ì´ì§€
+     */
+    @GetMapping("/info-todo")
+    public ModelAndView infoTodo(ScheduleVO vo, ModelAndView mv, HttpServletRequest request) {
+        vo.setId((String)request.getSession().getAttribute("loginID"));
+
+        mv.addObject("date", vo.getTodo_date());
+        mv.addObject("dispo", service.getDetailDataD(vo));
+        mv.addObject("every", service.getDetailDataE(vo));
+
+        mv.setViewName("calendar/infoTodo");
+        return mv;
+    }
+
+
+    /**
+     * ì¼ì • ë“±ë¡ì„ ìœ„í•œ ì»¨íŠ¸ë¡¤ëŸ¬
+     * @param vo ScheduleVO
+     * @param mv ModelAndView
+     * @param request HttpServletRequest
+     * @param rttr RedirectAttributes
+     * @param check_eve RequestParam-check_eve
+     * @return í•´ë‹¹ í˜ì´ì§€ë¡œ ë¦¬ë‹¤ì´ë ‰íŒ…
+     */
+    @PostMapping("/reg_todo")
+    public ModelAndView regTodo(ScheduleVO vo, ModelAndView mv, HttpServletRequest request, RedirectAttributes rttr,
+                                @RequestParam(value = "check_eve", required = false) String check_eve) {
+        String uri;
+        vo.setId((String)request.getSession().getAttribute("loginID"));
+
+        if (check_eve != null && check_eve.length() > 0) {
+            if (service.insertE(vo) > 0) {
+                rttr.addFlashAttribute("message", "ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
+            } else {
+                rttr.addFlashAttribute("message", "ë“±ë¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+            }
+        } else {
+            if (service.insertD(vo) > 0) {
+                rttr.addFlashAttribute("message", "ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
+            } else {
+                rttr.addFlashAttribute("message", "ë“±ë¡ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
+            }
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+
+        if (vo.getTodo_date().equals(dateFormat.format(date))) {
+            uri = "redirect:/";
+        } else {
+            rttr.addFlashAttribute("todo_date", vo.getTodo_date());
+            uri = "redirect:/info-todo";
+        }
+
+        mv.setViewName(uri);
         return mv;
     }
 

@@ -17,14 +17,13 @@ public class DateVO {
     private String month = "";
     private String date = "";
     private String value = "";
-    private String schedule = "";
-    private String schedule_detail = "";
+    private ScheduleVO schedule;
 
 
-    // default »ı¼ºÀÚ
+    // default ìƒì„±ì
     public DateVO() {}
 
-    // ´Ş·Â¸¸ »ç¿ë ½Ã »ç¿ëµÉ »ı¼ºÀÚ ===
+    // ìƒì„±ì
     public DateVO(String year, String month, String date, String value) {
         if ((month != null && month != "") && (date != null && date != "")) {
             this.year = year;
@@ -34,21 +33,20 @@ public class DateVO {
         }
     }
 
-    // ½ºÄÉÁÙ »ç¿ë ½Ã »ç¿ëµÉ »ı¼ºÀÚ ===
-    public DateVO(String year, String month, String date, String value, String schedule, String schedule_detail) {
+    // ìƒì„±ì
+    public DateVO(String year, String month, String date, String value, ScheduleVO schedule) {
         this.year = year;
         this.month = month;
         this.date = date;
         this.value = value;
         this.schedule = schedule;
-        this.schedule_detail = schedule_detail;
     }
 
 
-    // ÀÌÀü³âµµ, ÀÌÀü´Ş, ´ÙÀ½³âµµ, ´ÙÀ½´Ş ±¸ÇÏ´Â ¸Ş¼­µå *****
+
     private Map<String, Integer> beforeAfterCal(int searchYear, int searchMonth) {
 
-        // return ÇÒ Map º¯¼ö
+
         Map<String, Integer> beforeAfterData = new HashMap<>();
 
         int beforeYear = searchYear;
@@ -57,7 +55,7 @@ public class DateVO {
         int afterMonth = searchMonth + 1;
 
 
-        // 1¿ù = 0, 12¿ù = 11
+
         if(beforeMonth < 0) {
             beforeMonth = 11;
             beforeYear = searchYear - 1;
@@ -78,21 +76,21 @@ public class DateVO {
     }
 
 
-    // ³¯Â¥¿¡ °ü·ÃµÈ Á¤º¸¸¦ °¡Áö°í ¿À´Â ¸Ş¼­µå *****
+
     public Map<String, Integer> todayInfo(DateVO date) {
 
-        // return À» À§ÇÑ Map º¯¼ö
+
         Map<String, Integer> todayData = new HashMap<>();
 
-        // ÇØ´ç ¿ùÀÇ Ã¹³¯À» À§ÇÑ Calendar
+
         Calendar calendar = Calendar.getInstance();
         calendar.set(Integer.parseInt(date.getYear()), Integer.parseInt(date.getMonth()), 1);
 
-        int startDate = calendar.getMinimum(Calendar.DATE);                 // ½ÃÀÛ ³¯Â¥
-        int endDate = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);     // ¸¶Áö¸· ³¯Â¥
-        int start = calendar.get(Calendar.DAY_OF_WEEK);                     // ½ÃÀÛ ¿äÀÏ
+        int startDate = calendar.getMinimum(Calendar.DATE);                 // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥
+        int endDate = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥
+        int start = calendar.get(Calendar.DAY_OF_WEEK);                     // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // ÇöÀç ³¯Â¥ Á¤º¸
+
         Calendar todayCal = Calendar.getInstance();
         SimpleDateFormat yearF = new SimpleDateFormat("yyyy");
         SimpleDateFormat monF = new SimpleDateFormat("M");
@@ -100,7 +98,7 @@ public class DateVO {
         int todayYear = Integer.parseInt(yearF.format(todayCal.getTime()));
         int todayMonth = Integer.parseInt(monF.format(todayCal.getTime()));
 
-        // ³Ñ¾î¿Â ³¯Â¥ Á¤º¸
+
         int searchYear = Integer.parseInt(date.getYear());
         int searchMonth = Integer.parseInt(date.getMonth()) + 1;
 
@@ -115,16 +113,16 @@ public class DateVO {
 
         Map<String, Integer> beforeAfterCal = beforeAfterCal(searchYear, searchMonth);
 
-        todayData.put("start", start);              // ½ÃÀÛ ¿äÀÏ
-        todayData.put("startDate", startDate);      // ½ÃÀÛ ³¯Â¥
-        todayData.put("endDate", endDate);          // ¸¶Áö¸· ³¯Â¥
-        todayData.put("today", today);              // ÇöÀç ³¯Â¥
-        todayData.put("searchYear", searchYear);    // ³Ñ¾î¿Â ³âµµ
-        todayData.put("searchMonth", searchMonth);  // ³Ñ¾î¿Â ¿ù
-        todayData.put("beforeYear", beforeAfterCal.get("beforeYear"));      // ÀÌÀü ³âµµ
-        todayData.put("beforeMonth", beforeAfterCal.get("beforeMonth"));    // ÀÌÀü ¿ù
-        todayData.put("afterYear", beforeAfterCal.get("afterYear"));        // ´ÙÀ½ ³âµµ
-        todayData.put("afterMonth", beforeAfterCal.get("afterMonth"));      // ´ÙÀ½ ¿ù
+        todayData.put("start", start);
+        todayData.put("startDate", startDate);
+        todayData.put("endDate", endDate);
+        todayData.put("today", today);
+        todayData.put("searchYear", searchYear);
+        todayData.put("searchMonth", searchMonth);
+        todayData.put("beforeYear", beforeAfterCal.get("beforeYear"));
+        todayData.put("beforeMonth", beforeAfterCal.get("beforeMonth"));
+        todayData.put("afterYear", beforeAfterCal.get("afterYear"));
+        todayData.put("afterMonth", beforeAfterCal.get("afterMonth"));
 
         return todayData;
 

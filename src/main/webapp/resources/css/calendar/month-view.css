@@ -118,6 +118,23 @@
     width: 100%;
     height: 70%;
     padding: 5px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-height: 68px;
+    position: relative;
+}
+
+.schedule > .sche_text {
+    overflow: hidden;
+    font-size: 1.2rem;
+    width: 80%;
+    height: 15px;
+    line-height: 15px;
+    min-height: 15px;
+    background-color: #ECECEC;
+    box-shadow: 0 0 2px black;
 }
 
 
@@ -126,8 +143,8 @@
 /* === common === */
 /* today */
 .today {
-    text-decoration: underline white;
     font-weight: bold;
+    color: forestgreen;
 }
 
 /* sun_day */
@@ -144,15 +161,13 @@
 }
 
 
+
 /* hover */
 .td_box > .td_btn:hover,
 .calendar_nav > a:hover {
     background-color: #cccccc;
     opacity: 0.5;
-    cursor: pointer;
 }
-
-
 
 
 
@@ -190,6 +205,7 @@
     font-size: 2rem;
 }
 
+/* input */
 #content_box {
     width: 400px;
     height: 100px;
@@ -218,6 +234,28 @@
     line-height: 40px;
     border: 2px solid black;
 }
+
+
+
+/* info */
+.info_box {
+    width: 100%;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    padding: 10px;
+}
+
+.info_box > .content_text {
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    font-size: 1.5rem;
+}
+
+
+
 
 .close_btn {
     width: 30px;

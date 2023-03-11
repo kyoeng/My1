@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -83,6 +84,8 @@
 
                 <tbody>
                     <c:forEach var="dateList" items="${ requestScope.dateList }" varStatus="date_status">
+                        <c:set var="day" value="${(dateList.date < 10 && dateList.date != null ? '0' : '')}${dateList.date}" />
+
                         <c:choose>
                             <%-- 캘린더 첫번째는 무조건 일요일부터 시작 --%>
                             <c:when test="${ date_status.index == 0 }">
@@ -93,11 +96,26 @@
                                         </div>
 
                                         <div class="schedule">
+                                            <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
                                         </div>
 
                                         <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                            <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
+                                            <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                               class="td_btn"></a>
                                         </c:if>
                                     </td>
                             </c:when>
@@ -106,17 +124,32 @@
                             <c:when test="${ date_status.index % 7 == 0 && dateList.value == 'today'}">
                                 </tr>
                                 <tr>
-                                    <td class="sun_day td_box today">
-                                        <div class="date sun">
-                                            ${ dateList.date }
+                                    <td class="td_box today">
+                                        <div class="date today">
+                                            today
                                         </div>
 
                                         <div class="schedule">
+                                            <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
                                         </div>
 
                                         <c:if test="${ dateList.date != null && dateList.date != ''}">
-                                            <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
+                                            <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                               class="td_btn"></a>
                                         </c:if>
                                     </td>
                             </c:when>
@@ -125,15 +158,30 @@
                             <c:when test="${ dateList.value == 'today' }">
                                 <td class="today td_box">
                                     <div class="date today">
-                                        ${ dateList.date }
+                                        today
                                     </div>
 
                                     <div class="schedule">
+                                        <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
                                     </div>
 
                                     <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                        <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
+                                        <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                           class="td_btn"></a>
                                     </c:if>
                                 </td>
                             </c:when>
@@ -146,17 +194,32 @@
                                     </div>
 
                                     <div class="schedule">
+                                        <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
                                     </div>
 
                                     <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                        <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
+                                        <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                           class="td_btn"></a>
                                     </c:if>
                                 </td>
                             </c:when>
 
                             <%-- 일요일인 경우 --%>
-                            <c:when test="${ date_status.index % 7 == 0}">
+                            <c:when test="${ date_status.index % 7 == 0 }">
                                 </tr>
                                 <tr>
                                     <td class="sun_day td_box">
@@ -165,11 +228,26 @@
                                         </div>
 
                                         <div class="schedule">
+                                            <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
+
+                                            <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                                <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                                <c:if test="${ day == dd }">
+                                                    <span class="sche_text">${sche.todo_content}</span>
+                                                </c:if>
+                                            </c:forEach>
                                         </div>
 
                                         <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                            <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
+                                            <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                                class="td_btn"></a>
                                         </c:if>
                                     </td>
                             </c:when>
@@ -182,11 +260,26 @@
                                     </div>
 
                                     <div class="schedule">
+                                        <c:forEach var="sche" items="${ requestScope.dispo }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
 
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
+
+                                        <c:forEach var="sche" items="${ requestScope.every }" varStatus="st">
+                                            <c:set var="dd" value="${fn:split(sche.todo_date, '-')[2]}" />
+
+                                            <c:if test="${ day == dd }">
+                                                <span class="sche_text">${sche.todo_content}</span>
+                                            </c:if>
+                                        </c:forEach>
                                     </div>
 
                                     <c:if test="${ dateList.date != null && dateList.date != '' }">
-                                        <button onclick="onPopUp(${ dateList.date })" class="td_btn"></button>
+                                        <a href="info-todo?todo_date=${todayInfo.searchYear}-${todayInfo.searchMonth < 9 ? '0' : ''}${todayInfo.searchMonth + 1}-${dateList.date < 10 ? '0' : ''}${dateList.date}"
+                                           class="td_btn"></a>
                                     </c:if>
                                 </td>
                             </c:otherwise>
@@ -195,48 +288,5 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="popup_container">
-            <div class="popup_box">
-                <h3 class="popup_date"></h3>
-
-                <div style="width: 400px; height: 120px; margin: 0 auto;">
-                    <p style="font-size: 1.4rem; height: 20px; line-height: 20px">일정 내용</p>
-                    <textarea id="content_box" maxlength="50"></textarea>
-                </div>
-
-                <label>
-                    <input type="checkbox" value="eve" id="eve_check">
-                    해당 날짜 반복
-                </label>
-
-                <button class="add_btn">일정 추가</button>
-
-                <button onclick="offPopUp()" class="close_btn">X</button>
-            </div>
-        </div>
-
-        <script>
-            const yyyy = ${todayInfo.searchYear};
-
-            let mmTemp = ${todayInfo.searchMonth + 1};
-            if (mmTemp < 9) mmTemp = '0' + mmTemp;
-
-            const mm = mmTemp;
-
-            function onPopUp(d) {
-                if (d < 10) d = '0' + d;
-                let date = yyyy + '-' + mm + '-' + d;
-
-                $('.popup_date').text(date);
-                $('.popup_container').show();
-            }
-
-            function offPopUp() {
-                $('#content_box').val('');
-                $('#eve_check').prop('checked', false);
-                $('.popup_container').hide();
-            }
-        </script>
     </body>
 </html>
