@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="resources/css/commons/common.css">
     <link rel="stylesheet" type="text/css" href="resources/css/commons/header.css">
     <link rel="stylesheet" type="text/css" href="resources/css/index.css">
+    <script src="resources/js/jquery-3.2.1.min.js"></script>
     <script defer src="resources/js/header.js"></script>
   </head>
 
@@ -56,11 +57,13 @@
       <div class="todo_container">
         <div class="todo_dis">
           <h3 class="todo_title">
-            오늘 나의 일정
+            나의 일정
           </h3>
 
           <div class="todo_box">
-
+            <c:forEach var="dis" items="${requestScope.dispo}">
+              <span class="todo_content">${dis.todo_content}</span>
+            </c:forEach>
           </div>
         </div>
 
@@ -70,10 +73,55 @@
           </h3>
 
           <div class="todo_box">
-
+            <c:forEach var="eve" items="${requestScope.every}">
+              <span class="todo_content">${eve.todo_content}</span>
+            </c:forEach>
           </div>
         </div>
       </div>
+
+      <button class="input_btn" onclick="onPopUp()">+</button>
+
+      <c:if test="${requestScope.message != null}">
+        <p class="message">${requestScope.message}</p>
+      </c:if>
     </div>
+
+    <%-- 일정 등록 팝업 --%>
+    <div class="popup_container" id="input_pop">
+      <form class="popup_box" action="/reg_todo" method="post">
+        <h3 class="popup_date">
+          ${requestScope.today}
+        </h3>
+
+        <input type="hidden" name="todo_date" value="${requestScope.today}" >
+
+        <div style="width: 400px; height: 120px; margin: 0 auto;">
+          <p style="font-size: 1.4rem; height: 20px; line-height: 20px">일정 내용</p>
+          <textarea id="content_box" name="todo_content" maxlength="50"></textarea>
+        </div>
+
+        <label>
+          <input type="checkbox" value="eve" name="check_eve">
+          해당 날짜 반복
+        </label>
+
+        <button class="add_btn">일정 추가</button>
+
+        <div onclick="offPopUp()" class="close_btn">X</div>
+      </form>
+    </div>
+
+    <script>
+      function onPopUp() {
+        $('#input_pop').show();
+      }
+
+      function offPopUp() {
+        $('#content_box').val('');
+        $('#eve_check').prop('checked', false);
+        $('#input_pop').hide();
+      }
+    </script>
   </body>
 </html>
