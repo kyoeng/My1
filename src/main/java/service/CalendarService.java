@@ -24,4 +24,13 @@ public interface CalendarService {
     /* 일정 등록 (반복) */
     int insertE(ScheduleVO vo);
 
+    /* 일정 삭제 */
+    int deleteD(ScheduleVO vo);
+
+    /* 일정 삭제 (반복) */
+    int deleteE(ScheduleVO vo);
+
+    /* cron 삭제 */
+    int deleteCron(ScheduleVO vo);
+
 }

@@ -53,4 +53,25 @@
         insert into todo_every(id, todo_content, todo_date)
         values(#{id}, #{todo_content}, #{todo_date})
     </insert>
+
+
+
+    <!-- 일정 삭제 -->
+    <delete id="deleteD">
+        delete from todo_dispo
+        where seq = #{seq}
+    </delete>
+
+    <!-- 일정 삭제 (반복) -->
+    <delete id="deleteE">
+        delete from todo_every
+        where seq = #{seq}
+    </delete>
+
+
+    <!-- cron 삭제 -->
+    <delete id="deleteCron">
+        delete from todo_dispo
+        where todo_date = #{todo_date}
+    </delete>
 </mapper>

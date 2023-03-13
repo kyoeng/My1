@@ -80,4 +80,37 @@ public class CalendarServiceImpl implements CalendarService {
     public int insertE(ScheduleVO vo) {
         return mapper.insertE(vo);
     }
+
+
+    /**
+     * 일정 삭제를 위한 메서드
+     * @param vo ScheduleVO
+     * @return 성공 시 1, 실패 시 0
+     */
+    @Override
+    public int deleteD(ScheduleVO vo) {
+        return mapper.deleteD(vo);
+    }
+
+
+    /**
+     * 일정 삭제를 위한 메서드 (반복)
+     * @param vo ScheduleVO
+     * @return 성공 시 1, 실패 시 0
+     */
+    @Override
+    public int deleteE(ScheduleVO vo) {
+        return mapper.deleteE(vo);
+    }
+
+
+    /**
+     * 오늘 날짜 지우기
+     * @param vo ScheduleVO
+     * @return 성공 시 1, 실패 시 0
+     */
+    @Override
+    public int deleteCron(ScheduleVO vo) {
+        return mapper.deleteCron(vo);
+    }
 }

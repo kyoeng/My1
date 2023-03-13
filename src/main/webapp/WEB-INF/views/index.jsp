@@ -61,8 +61,11 @@
           </h3>
 
           <div class="todo_box">
-            <c:forEach var="dis" items="${requestScope.dispo}">
-              <span class="todo_content">${dis.todo_content}</span>
+            <c:forEach var="dispo" items="${requestScope.dispo}">
+              <div class="todo_content">
+                <span class="todo_text">${dispo.todo_content}</span>
+                <button onclick="delTodo(${dispo.seq}, null)">X</button>
+              </div>
             </c:forEach>
           </div>
         </div>
@@ -74,7 +77,10 @@
 
           <div class="todo_box">
             <c:forEach var="eve" items="${requestScope.every}">
-              <span class="todo_content">${eve.todo_content}</span>
+              <div class="todo_content">
+                <span class="todo_text eve">${eve.todo_content}</span>
+                <button onclick="delTodo(${eve.seq}, 'eve')">X</button>
+              </div>
             </c:forEach>
           </div>
         </div>
@@ -121,6 +127,26 @@
         $('#content_box').val('');
         $('#eve_check').prop('checked', false);
         $('#input_pop').hide();
+      }
+
+      function delTodo(seq, check) {
+        if (confirm('일정을 삭제하시겠습니까?')) {
+          $.ajax({
+            type: 'post',
+            url: 'del-todo',
+            data: {
+              seq: seq,
+              check: check
+            },
+            success: () => {
+              alert('삭제가 완료되었습니다.');
+              location.reload();
+            },
+            error: () => {
+              alert('삭제에 실패하였습니다.');
+            }
+          });
+        }
       }
     </script>
   </body>

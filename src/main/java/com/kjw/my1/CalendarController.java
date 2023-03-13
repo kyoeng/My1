@@ -1,11 +1,10 @@
 package com.kjw.my1;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.CalendarService;
@@ -162,6 +161,32 @@ public class CalendarController {
 
         mv.setViewName(uri);
         return mv;
+    }
+
+
+    /**
+     * 일정 삭제를 위한 컨트톨러
+     * @param vo ScheduleVO
+     * @param check String check
+     * @return 성공 시 200, 실패 시 500
+     */
+    @PostMapping("/del-todo")
+    public ResponseEntity<?> deleteTodo(ScheduleVO vo, @RequestParam(value = "check", required = false) String check) {
+        if (check != null && check.length() > 0) {
+            /* 매년 반복 일정 삭제 */
+            if (service.deleteE(vo) > 0) {
+                return ResponseEntity.status(HttpStatus.OK).body("성공");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("실패");
+            }
+        } else {
+            /* 반복 아닌 일정 삭제 */
+            if (service.deleteD(vo) > 0) {
+                return ResponseEntity.status(HttpStatus.OK).body("성공");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("실패");
+            }
+        }
     }
 
 }
