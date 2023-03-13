@@ -3,9 +3,10 @@
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:context="http://www.springframework.org/schema/context"
              xmlns:mvc="http://www.springframework.org/schema/mvc"
+             xmlns:task="http://www.springframework.org/schema/task"
              xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
 
     <mvc:annotation-driven />
@@ -33,16 +34,20 @@
     <!-- Interceptor Bean 설정 -->
     <beans:bean id="loginInterceptor" class="interceptor.LoginInterceptor" />
 
-        <!-- Interceptor 설정-->
-        <mvc:interceptors>
-            <mvc:interceptor>
-                <!-- ** 전체 경로 지정 후 예외경로 지정 ** -->
-                <mvc:mapping path="/"/>
+    <!-- Interceptor 설정-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- ** 전체 경로 지정 후 예외경로 지정 ** -->
+            <mvc:mapping path="/"/>
 
-                <!-- 인터셉터로 사용할 빈 등록 -->
-                <beans:ref bean="loginInterceptor" />
-            </mvc:interceptor>
-        </mvc:interceptors>
+            <!-- 인터셉터로 사용할 빈 등록 -->
+            <beans:ref bean="loginInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
+    <!-- cron 설정 -->
+    <task:scheduler id="scheduler" pool-size="10"/>
+    <task:annotation-driven scheduler="scheduler"/>
 
 
 </beans:beans>
