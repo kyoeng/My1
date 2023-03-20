@@ -155,7 +155,7 @@ public class CalendarController {
         if (vo.getTodo_date().equals(dateFormat.format(date))) {
             uri = "redirect:/";
         } else {
-            rttr.addFlashAttribute("todo_date", vo.getTodo_date());
+            rttr.addAttribute("todo_date", vo.getTodo_date());
             uri = "redirect:/info-todo";
         }
 

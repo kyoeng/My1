@@ -1,14 +1,16 @@
+'use strict'
+
 // password 규칙 확인 *****
 function pwRule() {
-    let password = $('#password').val();
+    let passwordv = $('#password').val();
 
-    if(password.length < 8) {
+    if(passwordv.length < 8) {
         $('#message').html('비밀번호는 최소 8자 이상이어야 합니다.');
         return false;
-    } else if(password.replace(/[!-*|@]/gi, '') >= password.length) {
+    } else if(passwordv.replace(/[!-*|@]/gi, '') >= passwordv.length) {
         $('#message').html('비밀번호는 반드시 특수문자가 1개 이상 포함되어야 합니다.');
         return false;
-    } else if(password.replace(/[a-z|0-9|!-*|@]/gi, '').length > 0) {
+    } else if(passwordv.replace(/[a-z|0-9|!-*|@]/gi, '').length > 0) {
         $('#message').html('비밀번호는 영문, 숫자, 특수문자로만 입력 가능합니다.');
         return false;
     } else {
