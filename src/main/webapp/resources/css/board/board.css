@@ -1,0 +1,219 @@
+main {
+    width: 1000px;
+    height: 600px;
+    margin: calc(((100vh - 600px) / 2) + 35px) auto 0;
+    box-shadow: 0px 0px 20px rgb(118, 118, 118);
+    background-color: white;
+    padding: 20px;
+    position: relative;
+}
+
+#message {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 230px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+#write_board {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 1.4rem;
+    border: 1px solid black;
+}
+
+#write_board:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+
+/* 검색 부분 */
+main > form {
+    width: 100%;
+    height: 30px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+main > form > select {
+    width: 100px;
+    height: 100%;
+}
+
+main > form > input:first-of-type {
+    width: 250px;
+    height: 100%;
+    padding-left: 10px;
+}
+
+#submit_btn {
+    width: 60px;
+    height: 100%;
+    line-height: 30px;
+    background-color: black;
+    text-align: center;
+    color: white;
+    font-size: 1.4rem;
+}
+
+#submit_btn:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+
+
+/* 게시판 네비 부분 */
+.board_line {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    border-bottom: 1px solid black;
+}
+
+.board_line > * {
+    height: 100%;
+    line-height: 40px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.b_seq {
+    width: 50px;
+}
+
+.b_title {
+    width: 300px;
+}
+
+.b_id {
+    width: 150px;
+}
+
+.b_date {
+    width: 250px;
+}
+
+.board_click:hover > * {
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+
+/* 글 쓰기 팝업 */
+#write_container {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.write_box {
+    width: 400px;
+    height: 500px;
+    position: absolute;
+    top: calc((100% - 500px) / 2);
+    left: calc((100% - 400px) / 2);
+    background-color: white;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+
+.write_box > p {
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.write_box > input:not(:last-of-type) {
+    width: 80%;
+    height: 30px;
+    padding: 5px;
+    font-size: 1.3rem;
+}
+
+.write_box > div {
+    width: 80%;
+    height: 30px;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.write_box > div > span {
+    width: 30%;
+    height: 100%;
+    line-height: 30px;
+    text-align: center;
+}
+
+.write_box > div > input {
+    width: 60%;
+    height: 100%;
+    padding: 5px;
+}
+
+.write_box > textarea {
+    width: 80%;
+    height: 100px;
+    padding: 5px;
+    font-size: 1.4rem;
+}
+
+.write_box > input:last-of-type {
+    width: 80%;
+    height: 40px;
+    font-size: 1.6rem;
+    background-color: black;
+    color: white;
+    text-align: center;
+    line-height: 40px;
+}
+
+.write_box > input:last-of-type:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+
+
+#close_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-size: 1.3rem;
+}
+
+#close_btn:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
