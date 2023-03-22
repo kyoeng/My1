@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.BoardService;
 import vo.BoardVO;
+import vo.CommentVO;
 import vo.PageMaker;
 import vo.SearchCri;
 
@@ -72,6 +73,38 @@ public class BoardController {
         }
 
         mv.setViewName(uri);
+        return mv;
+    }
+
+
+    /**
+     * 게시글 디테일 페이지를 위한 컨트롤러
+     * @param mv ModelAndView
+     * @param vo BoardVO
+     * @return 게시판 디테일 페이지
+     */
+    @GetMapping("/detail-board")
+    public ModelAndView detailBoard(ModelAndView mv, BoardVO vo) {
+        mv.addObject("board", service.selectOne(vo));
+        mv.addObject("commnet", service.getComments(vo));
+        mv.setViewName("board/board-detail");
+        return mv;
+    }
+
+
+    @PostMapping("/reg-comment")
+    public ModelAndView regComment(CommentVO vo, ModelAndView mv, HttpServletRequest request) {
+        if (request.getSession().getAttribute("loginID").equals(vo.getId())) {
+            if (service.regComment(vo) > 0) {
+                mv.addObject("code", "200");
+            } else {
+                mv.addObject("code", "202");
+            }
+        } else {
+            mv.addObject("code", "202");
+        }
+
+        mv.setViewName("jsonView");
         return mv;
     }
 }

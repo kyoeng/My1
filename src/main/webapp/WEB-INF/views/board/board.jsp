@@ -62,8 +62,22 @@
 
             <form action="board" method="get">
                 <select name="check" id="check_select">
-                    <option value="id">아이디</option>
-                    <option value="title">제목</option>
+                    <c:choose>
+                        <c:when test="${pageMaker.criteria.check == 'id'}">
+                            <option value="id" selected>아이디</option>
+                            <option value="title">제목</option>
+                        </c:when>
+
+                        <c:when test="${pageMaker.criteria.check == 'title'}">
+                            <option value="id">아이디</option>
+                            <option value="title" selected>제목</option>
+                        </c:when>
+
+                        <c:otherwise>
+                            <option value="id">아이디</option>
+                            <option value="title">제목</option>
+                        </c:otherwise>
+                    </c:choose>
                 </select>
 
                 <input type="text" name="keyword">
@@ -79,14 +93,54 @@
                 <span class="b_date">작성일</span>
             </div>
 
-            <c:forEach var="board" items="${requestScope.boardList}">
-                <a href="" class="board_line board_click">
-                    <span class="b_seq">${board.seq}</span>
-                    <span class="b_title">${board.title}</span>
-                    <span class="b_id">${board.id}</span>
-                    <span class="b_date">${board.reg_date}</span>
-                </a>
-            </c:forEach>
+            <div class="board_content_container">
+                <c:forEach var="board" items="${requestScope.boardList}">
+                    <a href="detail-board?seq=${board.seq}" class="board_line board_click">
+                        <span class="b_seq">${board.seq}</span>
+                        <span class="b_title">${board.title}</span>
+                        <span class="b_id">${board.id}</span>
+                        <span class="b_date">${board.reg_date}</span>
+                    </a>
+                </c:forEach>
+            </div>
+
+            <div class="paging_container">
+                <c:if test="${pageMaker.prev}">
+                    <a href="board?currentPage=1&check=${pageMaker.criteria.check}&keyword=${pageMaker.criteria.keyword}" class="paging_btn">
+                        &lt;&lt;
+                    </a>
+
+                    <a href="board?currentPage=${pageMaker.startPageNum - 1}&check=${pageMaker.criteria.check}&keyword=${pageMaker.criteria.keyword}" class="paging_btn">
+                        &lt;
+                    </a>
+                </c:if>
+
+                <c:forEach var="i" begin="${pageMaker.startPageNum}" end="${pageMaker.endPageNum}">
+                    <c:choose>
+                        <c:when test="${i == pageMaker.criteria.currentPage}">
+                            <a class="paging_num current_btn">
+                                <c:out value="${i}" />
+                            </a>
+                        </c:when>
+
+                        <c:otherwise>
+                            <a href="board?currentPage=${i}&check=${pageMaker.criteria.check}&keyword=${pageMaker.criteria.keyword}" class="paging_num" >
+                                <c:out value="${i}" />
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+                <c:if test="${pageMaker.next}">
+                    <a href="board?currentPage=${pageMaker.endPageNum + 1}&check=${pageMaker.criteria.check}&keyword=${pageMaker.criteria.keyword}" class="paging_btn">
+                        &gt;
+                    </a>
+
+                    <a href="board?currentPage=${pageMaker.lastPageNum}&check=${pageMaker.criteria.check}&keyword=${pageMaker.criteria.keyword}" class="paging_btn">
+                        &gt;&gt;
+                    </a>
+                </c:if>
+            </div>
         </main>
 
         <div id="write_container">

@@ -4,6 +4,7 @@ package service;
 import mappers.BoardMapper;
 import org.springframework.stereotype.Service;
 import vo.BoardVO;
+import vo.CommentVO;
 import vo.SearchCri;
 
 import java.util.List;
@@ -30,5 +31,20 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int regBoard(BoardVO vo) {
         return mapper.regBoard(vo);
+    }
+
+    @Override
+    public BoardVO selectOne(BoardVO vo) {
+        return mapper.selectOne(vo);
+    }
+
+    @Override
+    public List<CommentVO> getComments(BoardVO vo) {
+        return mapper.getComments(vo);
+    }
+
+    @Override
+    public int regComment(CommentVO vo) {
+        return mapper.regComment(vo);
     }
 }
